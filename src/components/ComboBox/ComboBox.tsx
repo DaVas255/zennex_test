@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchCategories } from '@/api/fetchApi';
 import { ChevronUpIcon, ChevronDownIcon, CloseIcon } from '@/app/assets/icons';
 import styles from './ComboBox.module.scss';
+import useClickOutside from '@/Hooks/useClickOutside';
 
 interface ComboBoxProps {
 	selectedCategories: string[];
@@ -27,28 +28,13 @@ export default function ComboBox({
 	const [searchValue, setSearchValue] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	const comboBoxRef = useRef<HTMLDivElement>(null);
+	useClickOutside(comboBoxRef, () => setIsOpen(false));
 
 	const {
 		data: categories,
 		isLoading,
 		isError,
 	} = useQuery(['categories'], fetchCategories);
-
-	useEffect(() => {
-		function handleClickOutside(event: MouseEvent) {
-			if (
-				comboBoxRef.current &&
-				!comboBoxRef.current.contains(event.target as Node)
-			) {
-				setIsOpen(false);
-			}
-		}
-
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}, []);
 
 	if (isLoading) return <div>Загрузка категорий...</div>;
 	if (isError || !categories) return <div>Ошибка при загрузке категорий</div>;
