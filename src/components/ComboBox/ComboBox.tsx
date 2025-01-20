@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import { ChevronUpIcon, ChevronDownIcon, CloseIcon } from '@/app/assets/icons';
 import styles from './ComboBox.module.scss';
-import useClickOutside from '@/Hooks/useClickOutside';
+import useClickOutside from '@/hooks/useClickOutside';
 
 /**
  * @property initialCategories - Исходный список категорий.

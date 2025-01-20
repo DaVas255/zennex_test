@@ -16,15 +16,15 @@ interface Product {
 	};
 }
 
-interface HomePageProps {
+interface WrapperProps {
 	initialProducts: Product[];
 	initialCategories: string[];
 }
 
-export default function HomePage({
+export default function Wrapper({
 	initialProducts,
 	initialCategories,
-}: HomePageProps) {
+}: WrapperProps) {
 	const queryClient = new QueryClient();
 
 	return (

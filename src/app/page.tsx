@@ -1,4 +1,4 @@
-import HomePage from '@/components/HomePage/HomePage';
+import Wrapper from '@/components/Wrapper/Wrapper';
 import { fetchCategories, fetchProducts } from '@/api/fetchApi';
 
 export default async function Page() {
@@ -8,5 +8,5 @@ export default async function Page() {
 	if (!products) return console.error('Продукты не получены');
 	if (!categories) return console.error('Категории не получены');
 
-	return <HomePage initialProducts={products} initialCategories={categories} />;
+	return <Wrapper initialProducts={products} initialCategories={categories} />;
 }
