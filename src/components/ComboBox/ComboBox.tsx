@@ -10,7 +10,7 @@ import useClickOutside from '@/Hooks/useClickOutside';
 
 interface ComboBoxProps {
 	selectedCategories: string[];
-	onChange: (categories: string[]) => void;
+	onChange: (updateFn: (prev: string[]) => string[]) => void;
 	backgroundColor?: string;
 	color?: string;
 	fontSize?: string;
@@ -27,17 +27,19 @@ export default function ComboBox({
 }: ComboBoxProps) {
 	const [searchValue, setSearchValue] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [categories, setCategories] = useState<string[]>([]);
 	const comboBoxRef = useRef<HTMLDivElement>(null);
 	useClickOutside(comboBoxRef, () => setIsOpen(false));
 
-	const {
-		data: categories,
-		isLoading,
-		isError,
-	} = useQuery(['categories'], fetchCategories);
+	useEffect(() => {
+		fetchCategories().then((categories) => {
+			setIsLoading(false);
+			setCategories(categories || []);
+		});
+	}, []);
 
 	if (isLoading) return <div>Загрузка категорий...</div>;
-	if (isError || !categories) return <div>Ошибка при загрузке категорий</div>;
 
 	const filteredCategories = categories.filter((category) =>
 		category.toLowerCase().includes(searchValue.trim().toLowerCase())
@@ -48,13 +50,12 @@ export default function ComboBox({
 	);
 
 	const handleSelectCategory = (category: string) => {
-		if (!selectedCategories.includes(category)) {
-			onChange([...selectedCategories, category]);
-		}
+		if (!selectedCategories.includes(category))
+			onChange((prev) => [...prev, category]);
 	};
 
 	const handleRemoveCategory = (category: string) => {
-		onChange(selectedCategories.filter((cat) => cat !== category));
+		onChange((prev) => prev.filter((cat) => cat !== category));
 	};
 
 	const isAllSelected = selectedCategories.length === categories.length;
