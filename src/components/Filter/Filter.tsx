@@ -1,10 +1,12 @@
+'use client';
+
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import ComboBox from '../ComboBox/ComboBox';
 import ProductsList from '../ProductsList/ProductsList';
+import { fetchCategoryProducts } from '@/api/fetchApi';
 import styles from './Filter.module.scss';
-import { fetchCategoryProducts, fetchProducts } from '@/api/fetchApi';
 
 interface Product {
 	id: number;
@@ -19,34 +21,23 @@ interface Product {
 	};
 }
 
-/**
- * Компонент для фильтрации продуктов:
- */
+interface FilterProps {
+	initialProducts: Product[];
+	initialCategories: string[];
+}
 
-export default function Filter() {
+export default function Filter({
+	initialProducts,
+	initialCategories,
+}: FilterProps) {
 	const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-	const [initialProducts, setInitialProducts] = useState<Product[] | null>([]);
-	const [initialError, setInitialError] = useState<string | null>(null);
-	const [initialLoading, setInitialLoading] = useState<boolean>(true);
 
-	useEffect(() => {
-		fetchProducts()
-			.then((products) => {
-				setInitialProducts(products);
-			})
-			.catch((error) => {
-				setInitialError(error.message);
-			})
-			.finally(() => {
-				setInitialLoading(false);
-			});
-	}, []);
-
-	const { data: productsFromQuery, isLoading: isQueryLoading } = useQuery(
+	const { data: products, isLoading } = useQuery(
 		['products', selectedCategories],
-		() => fetchCategoryProducts(selectedCategories),
-		{
-			enabled: selectedCategories.length > 0,
+		() => {
+			return selectedCategories.length
+				? fetchCategoryProducts(selectedCategories)
+				: initialProducts;
 		}
 	);
 
@@ -54,29 +45,17 @@ export default function Filter() {
 		setSelectedCategories((prev) => updateFn(prev));
 	};
 
-	const productsToShow =
-		selectedCategories.length === 0 ? initialProducts : productsFromQuery;
-
-	const loading =
-		initialLoading || (isQueryLoading && selectedCategories.length > 0);
-
-	if (loading) return <div>Загрузка продуктов</div>;
-
-	if (initialError) return <div>Ошибка</div>;
-
 	return (
 		<div className={styles.filter}>
 			<ComboBox
+				initialCategories={initialCategories}
 				selectedCategories={selectedCategories}
 				onChange={handleChangeCategories}
-				theme='multi-colored'
+				theme='dark'
 			/>
 
-			{productsToShow ? (
-				<ProductsList products={productsToShow} />
-			) : (
-				<div>Нет товаров</div>
-			)}
+			{isLoading && <div>Загрузка продуктов...</div>}
+			{products && <ProductsList products={products} />}
 		</div>
 	);
 }

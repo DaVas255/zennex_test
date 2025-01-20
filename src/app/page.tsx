@@ -1,13 +1,12 @@
-'use client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Filter from '@/components/Filter/Filter';
+import HomePage from '@/components/HomePage/HomePage';
+import { fetchCategories, fetchProducts } from '@/api/fetchApi';
 
-const queryClient = new QueryClient();
+export default async function Page() {
+	const categories = await fetchCategories();
+	const products = await fetchProducts();
 
-export default function Home() {
-	return (
-		<QueryClientProvider client={queryClient}>
-			<Filter />
-		</QueryClientProvider>
-	);
+	if (!products) return console.error('Продукты не получены');
+	if (!categories) return console.error('Категории не получены');
+
+	return <HomePage initialProducts={products} initialCategories={categories} />;
 }

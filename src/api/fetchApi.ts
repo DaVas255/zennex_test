@@ -60,8 +60,6 @@ export async function fetchCategories(): Promise<Category[] | null> {
  */
 
 export async function fetchCategoryProducts(selectedCategories: string[]): Promise<Product[] | null> {
-  if (!selectedCategories.length) return fetchProducts();
-
   try {
     const responses = selectedCategories.map((category) =>
       fetch(`${url}/category/${category}`).then((res) =>

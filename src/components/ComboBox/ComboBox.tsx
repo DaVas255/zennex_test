@@ -9,11 +9,13 @@ import styles from './ComboBox.module.scss';
 import useClickOutside from '@/Hooks/useClickOutside';
 
 /**
+ * @property initialCategories - Исходный список категорий.
  * @property selectedCategories - Текущий список выбранных категорий.
  * @property onChange - Колбэк, который принимает функцию для обновления категорий.
  * @property theme - Тема оформления ComboBox: 'light', 'dark' или 'multi-colored'.
  */
 interface ComboBoxProps {
+	initialCategories: string[];
 	selectedCategories: string[];
 	onChange: (updateFn: (prev: string[]) => string[]) => void;
 	theme: 'light' | 'dark' | 'multi-colored';
@@ -28,32 +30,17 @@ interface ComboBoxProps {
  */
 
 export default function ComboBox({
+	initialCategories,
 	selectedCategories,
 	onChange,
 	theme,
 }: ComboBoxProps) {
 	const [searchValue, setSearchValue] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-	const [categories, setCategories] = useState<string[]>([]);
 	const comboBoxRef = useRef<HTMLDivElement>(null);
 	useClickOutside(comboBoxRef, () => setIsOpen(false));
 
-	useEffect(() => {
-		fetchCategories()
-			.then((categories) => {
-				setCategories(categories || []);
-			})
-			.catch((error) => {
-				setError(error.message);
-			})
-			.finally(() => setIsLoading(false));
-	}, []);
-
-	if (isLoading) return <div>Загрузка категорий...</div>;
-
-	const filteredCategories = categories.filter((category) =>
+	const filteredCategories = initialCategories.filter((category) =>
 		category.toLowerCase().includes(searchValue.trim().toLowerCase())
 	);
 
@@ -70,13 +57,9 @@ export default function ComboBox({
 		onChange((prev) => prev.filter((cat) => cat !== category));
 	};
 
-	const isAllSelected = selectedCategories.length === categories.length;
+	const isAllSelected = selectedCategories.length === initialCategories.length;
 	const isDropdownOpen =
 		isOpen && !isAllSelected && filteredCategories.length > 0;
-
-	if (error) {
-		return <div>{error}</div>;
-	}
 
 	return (
 		<div className={styles.comboBox} ref={comboBoxRef}>
