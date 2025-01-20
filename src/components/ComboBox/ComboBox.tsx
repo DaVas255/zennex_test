@@ -28,15 +28,20 @@ export default function ComboBox({
 	const [searchValue, setSearchValue] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 	const [categories, setCategories] = useState<string[]>([]);
 	const comboBoxRef = useRef<HTMLDivElement>(null);
 	useClickOutside(comboBoxRef, () => setIsOpen(false));
 
 	useEffect(() => {
-		fetchCategories().then((categories) => {
-			setIsLoading(false);
-			setCategories(categories || []);
-		});
+		fetchCategories()
+			.then((categories) => {
+				setCategories(categories || []);
+			})
+			.catch((error) => {
+				setError(error.message);
+			})
+			.finally(() => setIsLoading(false));
 	}, []);
 
 	if (isLoading) return <div>Загрузка категорий...</div>;
@@ -61,6 +66,10 @@ export default function ComboBox({
 	const isAllSelected = selectedCategories.length === categories.length;
 	const isDropdownOpen =
 		isOpen && !isAllSelected && filteredCategories.length > 0;
+
+	if (error) {
+		return <div>{error}</div>;
+	}
 
 	return (
 		<div className={styles.comboBox} ref={comboBoxRef}>
