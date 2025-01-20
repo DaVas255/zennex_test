@@ -46,7 +46,7 @@ export default function ComboBox({
 	if (isError || !categories) return <div>Ошибка при загрузке категорий</div>;
 
 	const filteredCategories = categories.filter((category) =>
-		category.toLowerCase().includes(searchValue.toLowerCase())
+		category.toLowerCase().includes(searchValue.trim().toLowerCase())
 	);
 
 	const unselectedCategories = filteredCategories.filter(
