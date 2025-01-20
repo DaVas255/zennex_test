@@ -1,11 +1,22 @@
 type ChevronProps = {
 	onClick: () => void;
+	theme?: 'light' | 'dark' | 'multi-colored';
 };
 
-export default function ChevronDown({ onClick }: ChevronProps) {
+export default function ChevronDown({ onClick, theme }: ChevronProps) {
+	let color;
+
+	if (theme === 'light') {
+		color = '#000000';
+	} else if (theme === 'dark') {
+		color = '#ffffff';
+	} else if (theme === 'multi-colored') {
+		color = '#fa8c8c';
+	}
+
 	return (
 		<svg
-			fill='#fff'
+			fill={color}
 			width='20px'
 			height='20px'
 			viewBox='-5 -8 24 24'

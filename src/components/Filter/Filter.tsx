@@ -65,10 +65,7 @@ export default function Filter() {
 			<ComboBox
 				selectedCategories={selectedCategories}
 				onChange={handleChangeCategories}
-				backgroundColor=''
-				color=''
-				fontSize=''
-				border=''
+				theme='multi-colored'
 			/>
 
 			{productsToShow ? (

@@ -16,9 +16,23 @@
     align-items: center;
     padding: 8px;
 
-    border: 1px solid #ffffff;
     border-radius: 8px;
-    background-color: transparent;
+    border: 2px solid transparent;
+
+    &-light {
+      background-color: #ffffff;
+      border-color: #000000;
+    }
+
+    &-dark {
+      border-color: #ffffff;
+      background-color: #000000;
+    }
+
+    &-multi-colored {
+      border-color: #fa8c8c;
+      background-color: #3e763e;
+    }
   }
 
   &__tags {
@@ -33,7 +47,7 @@
     align-items: center;
     padding: 0 4px;
 
-    background-color: #FFFFFF;
+    background-color: #a8a6a6;
     border-radius: 4px;
 
     color: #000000;
@@ -59,7 +73,19 @@
     border: none;
     outline: none;
 
-    color: #fff;
+
+    &-light {
+      color: #000000;
+    }
+
+    &-dark {
+      background-color: #000000;
+      color: #ffffff;
+    }
+
+    &-multi-colored {
+      color: #fa8c8c;
+    }
   }
 
   &__inputIcon {
@@ -76,11 +102,26 @@
     padding: 0;
     margin: 0;
 
-    background-color: #000000;
     border-radius: 8px;
-    border: 1px solid #ffffff;
+    border: 2px solid transparent;
 
     list-style: none;
+
+    &-light {
+      background-color: #ffffff;
+      border-color: #000000;
+      color: #000000;
+    }
+
+    &-dark {
+      border-color: #ffffff;
+      background-color: #000000;
+    }
+
+    &-multi-colored {
+      border-color: #fa8c8c;
+      background-color: #3e763e;
+    }
   }
 
   &__dropdownItem {
@@ -88,8 +129,9 @@
     cursor: pointer;
 
     &:hover {
-      background-color: #ffffff;
+      background-color: #737171;
       color: #000000;
     }
+
   }
 }

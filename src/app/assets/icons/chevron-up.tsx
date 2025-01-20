@@ -1,8 +1,19 @@
 type ChevronProps = {
 	onClick: () => void;
+	theme?: 'light' | 'dark' | 'multi-colored';
 };
 
-export default function ChevronUp({ onClick }: ChevronProps) {
+export default function ChevronUp({ onClick, theme }: ChevronProps) {
+	let color;
+
+	if (theme === 'light') {
+		color = '#000000';
+	} else if (theme === 'dark') {
+		color = '#ffffff';
+	} else if (theme === 'multi-colored') {
+		color = '#fa8c8c';
+	}
+
 	return (
 		<svg
 			width='20px'
@@ -14,7 +25,7 @@ export default function ChevronUp({ onClick }: ChevronProps) {
 		>
 			<path
 				d='M6 15L12 9L18 15'
-				stroke='#fff'
+				stroke={color}
 				strokeWidth='2'
 				strokeLinecap='round'
 				strokeLinejoin='round'

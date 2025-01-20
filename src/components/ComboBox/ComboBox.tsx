@@ -11,19 +11,13 @@ import useClickOutside from '@/Hooks/useClickOutside';
 interface ComboBoxProps {
 	selectedCategories: string[];
 	onChange: (updateFn: (prev: string[]) => string[]) => void;
-	backgroundColor?: string;
-	color?: string;
-	fontSize?: string;
-	border?: string;
+	theme: 'light' | 'dark' | 'multi-colored';
 }
 
 export default function ComboBox({
 	selectedCategories,
 	onChange,
-	backgroundColor,
-	color,
-	fontSize,
-	border,
+	theme,
 }: ComboBoxProps) {
 	const [searchValue, setSearchValue] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
@@ -74,11 +68,10 @@ export default function ComboBox({
 	return (
 		<div className={styles.comboBox} ref={comboBoxRef}>
 			<div
-				className={styles.comboBox__inputWrap}
-				style={{
-					backgroundColor: backgroundColor,
-					border: border,
-				}}
+				className={`
+        ${styles.comboBox__inputWrap} 
+        ${styles[`comboBox__inputWrap-${theme}`]}
+      `}
 			>
 				<div className={styles.comboBox__tags}>
 					{selectedCategories.map((cat, index) => (
@@ -95,32 +88,36 @@ export default function ComboBox({
 					))}
 
 					<input
-						className={styles.comboBox__input}
+						className={`${styles.comboBox__input} ${
+							styles[`comboBox__input-${theme}`]
+						}`}
 						type='text'
 						placeholder='Поиск'
 						value={searchValue}
 						onChange={(e) => setSearchValue(e.target.value)}
 						onFocus={() => setIsOpen(true)}
-						style={{
-							fontSize: fontSize,
-							color: color,
-						}}
 					/>
 				</div>
 
 				{isDropdownOpen ? (
-					<ChevronUpIcon onClick={() => setIsOpen(false)} />
+					<ChevronUpIcon onClick={() => setIsOpen(false)} theme={theme} />
 				) : (
-					<ChevronDownIcon onClick={() => setIsOpen(true)} />
+					<ChevronDownIcon onClick={() => setIsOpen(true)} theme={theme} />
 				)}
 			</div>
 
 			{isDropdownOpen && (
-				<ul className={styles.comboBox__dropdownList}>
+				<ul
+					className={`${styles.comboBox__dropdownList} ${
+						styles[`comboBox__dropdownList-${theme}`]
+					}`}
+				>
 					{unselectedCategories.map((category, index) => (
 						<li
 							key={index}
-							className={styles.comboBox__dropdownItem}
+							className={`${styles.comboBox__dropdownItem} ${
+								styles[`comboBox__dropdownItem-${theme}`]
+							}`}
 							onClick={() => handleSelectCategory(category)}
 						>
 							{category}
