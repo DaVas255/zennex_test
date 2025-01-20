@@ -3,7 +3,7 @@
 import ProductItem from '@/components/ProductItem/ProductItem';
 import styles from './ProductsList.module.scss';
 
-type Product = {
+interface Product {
 	id: number;
 	title: string;
 	price: number;
@@ -14,7 +14,7 @@ type Product = {
 		rate: number;
 		count: number;
 	};
-};
+}
 
 type ProductsListProps = {
 	products: Product[];

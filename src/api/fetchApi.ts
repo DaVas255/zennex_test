@@ -54,7 +54,6 @@ export async function fetchCategories(): Promise<Category[] | null> {
 
 /**
  * Получение товаров по выбранным категориям.
- * Если категории не выбраны, возвращает все товары.
  * @param selectedCategories - список выбранных категорий
  * @returns Массив товаров или null при ошибке
  */
