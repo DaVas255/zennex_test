@@ -2,6 +2,8 @@
 
 ## 1. Установка и запуск
 
+Создать файл .env в корне и указать NEXT_PUBLIC_API_URL
+
 ```
 npm install
 npm run dev

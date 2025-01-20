@@ -1,4 +1,4 @@
-import { API_URL } from "@/app/consts";
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 interface Product {
   id: number;
@@ -17,7 +17,8 @@ type Category = Product['category'];
 
 export async function fetchProducts(): Promise<Product[] | null> {
   try {
-    const response = await fetch(API_URL);
+    if (!url) return null;
+    const response = await fetch(url);
     if (!response.ok) throw new Error('Ошибка получения товаров');
 
     const data: Product[] = await response.json();
@@ -30,7 +31,7 @@ export async function fetchProducts(): Promise<Product[] | null> {
 
 export async function fetchCategories(): Promise<Category[] | null> {
   try {
-    const response = await fetch(`${API_URL}/categories`);
+    const response = await fetch(`${url}/categories`);
     if (!response.ok) throw new Error('Ошибка получения категорий');
 
     const data: Category[] = await response.json();
@@ -46,7 +47,7 @@ export async function fetchCategoryProducts(selectedCategories: string[]): Promi
 
   try {
     const responses = selectedCategories.map((category) =>
-      fetch(`${API_URL}/category/${category}`).then((res) =>
+      fetch(`${url}/category/${category}`).then((res) =>
         res.json()
       )
     );
