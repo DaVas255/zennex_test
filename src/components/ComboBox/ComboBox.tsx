@@ -24,10 +24,7 @@ export default function ComboBox({
 		data: categories,
 		isLoading,
 		isError,
-	} = useQuery({
-		queryKey: ['categories'],
-		queryFn: fetchCategories,
-	});
+	} = useQuery(['categories'], fetchCategories);
 
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {

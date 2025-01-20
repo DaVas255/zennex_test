@@ -9,10 +9,10 @@ import { fetchCategoryProducts } from '@/api/fetchApi';
 export default function Filter() {
 	const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-	const { data: products, isLoading } = useQuery({
-		queryKey: ['products', selectedCategories],
-		queryFn: () => fetchCategoryProducts(selectedCategories),
-	});
+	const { data: products, isLoading } = useQuery(
+		['products', selectedCategories],
+		() => fetchCategoryProducts(selectedCategories)
+	);
 
 	return (
 		<div className={styles.filter}>
