@@ -73,8 +73,8 @@ export default function ComboBox({
 				}}
 			>
 				<div className={styles.comboBox__tags}>
-					{selectedCategories.map((cat) => (
-						<div key={cat} className={styles.comboBox__tag}>
+					{selectedCategories.map((cat, index) => (
+						<div key={index} className={styles.comboBox__tag}>
 							{cat}
 							<button
 								type='button'
