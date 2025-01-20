@@ -20,6 +20,11 @@ type ProductsListProps = {
 	products: Product[];
 };
 
+/**
+ * Компонент для отображения списка товаров.
+ * Если массив пуст, выводит «Нет товаров».
+ */
+
 export default function ProductsList({ products }: ProductsListProps) {
 	if (!products || !products.length) return <div>Нет товаров</div>;
 

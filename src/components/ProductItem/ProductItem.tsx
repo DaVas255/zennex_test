@@ -14,6 +14,11 @@ interface Product {
 	};
 }
 
+/**
+ * Отдельный товар (карточка).
+ * Отображает изображение, название, описание, цену и рейтинг.
+ */
+
 export default function ProductItem({ product }: { product: Product }) {
 	return (
 		<div className={styles.product}>

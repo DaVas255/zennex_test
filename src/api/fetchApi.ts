@@ -15,6 +15,11 @@ interface Product {
 
 type Category = Product['category'];
 
+/**
+ * Получение всех товаров.
+ * @returns Массив товаров или null при ошибке.
+ */
+
 export async function fetchProducts(): Promise<Product[] | null> {
   try {
     if (!url) return null;
@@ -29,6 +34,11 @@ export async function fetchProducts(): Promise<Product[] | null> {
   }
 }
 
+/**
+ * Получение всех доступных категорий.
+ * @returns Массив названий категорий или null при ошибке.
+ */
+
 export async function fetchCategories(): Promise<Category[] | null> {
   try {
     const response = await fetch(`${url}/categories`);
@@ -41,6 +51,13 @@ export async function fetchCategories(): Promise<Category[] | null> {
     return null;
   }
 }
+
+/**
+ * Получение товаров по выбранным категориям.
+ * Если категории не выбраны, возвращает все товары.
+ * @param selectedCategories - список выбранных категорий
+ * @returns Массив товаров или null при ошибке
+ */
 
 export async function fetchCategoryProducts(selectedCategories: string[]): Promise<Product[] | null> {
   if (!selectedCategories.length) return fetchProducts();

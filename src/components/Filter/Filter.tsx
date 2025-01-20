@@ -19,6 +19,10 @@ interface Product {
 	};
 }
 
+/**
+ * Компонент для фильтрации продуктов:
+ */
+
 export default function Filter() {
 	const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 	const [initialProducts, setInitialProducts] = useState<Product[] | null>([]);

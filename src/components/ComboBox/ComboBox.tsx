@@ -8,11 +8,24 @@ import { ChevronUpIcon, ChevronDownIcon, CloseIcon } from '@/app/assets/icons';
 import styles from './ComboBox.module.scss';
 import useClickOutside from '@/Hooks/useClickOutside';
 
+/**
+ * @property selectedCategories - Текущий список выбранных категорий.
+ * @property onChange - Колбэк, который принимает функцию для обновления категорий.
+ * @property theme - Тема оформления ComboBox: 'light', 'dark' или 'multi-colored'.
+ */
 interface ComboBoxProps {
 	selectedCategories: string[];
 	onChange: (updateFn: (prev: string[]) => string[]) => void;
 	theme: 'light' | 'dark' | 'multi-colored';
 }
+
+/**
+ * ComboBox для выбора категорий:
+ * - Поддерживает поиск
+ * - Отображает уже выбранные категории и позволяет их удалить
+ * - Подгружает список категорий с сервера (fetchCategories)
+ * - Умеет переключаться между темами (light, dark, multi-colored)
+ */
 
 export default function ComboBox({
 	selectedCategories,
