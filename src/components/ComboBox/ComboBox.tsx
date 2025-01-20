@@ -49,6 +49,10 @@ export default function ComboBox({
 		category.toLowerCase().includes(searchValue.toLowerCase())
 	);
 
+	const unselectedCategories = filteredCategories.filter(
+		(category) => !selectedCategories.includes(category)
+	);
+
 	const handleSelectCategory = (category: string) => {
 		if (!selectedCategories.includes(category)) {
 			onChange([...selectedCategories, category]);
@@ -109,18 +113,15 @@ export default function ComboBox({
 
 			{isDropdownOpen && (
 				<ul className={styles.comboBox__dropdownList}>
-					{filteredCategories.map((category) => {
-						if (selectedCategories.includes(category)) return null;
-						return (
-							<li
-								key={category}
-								className={styles.comboBox__dropdownItem}
-								onClick={() => handleSelectCategory(category)}
-							>
-								{category}
-							</li>
-						);
-					})}
+					{unselectedCategories.map((category, index) => (
+						<li
+							key={index}
+							className={styles.comboBox__dropdownItem}
+							onClick={() => handleSelectCategory(category)}
+						>
+							{category}
+						</li>
+					))}
 				</ul>
 			)}
 		</div>
