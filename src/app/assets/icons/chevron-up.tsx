@@ -1,4 +1,6 @@
-import { ChevronProps } from '@/types/types';
+type ChevronProps = {
+	onClick: () => void;
+};
 
 export default function ChevronUp({ onClick }: ChevronProps) {
 	return (

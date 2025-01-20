@@ -4,9 +4,17 @@ import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchCategories } from '@/api/fetchApi';
-import { ComboBoxProps } from '@/types/types';
 import { ChevronUpIcon, ChevronDownIcon, CloseIcon } from '@/app/assets/icons';
 import styles from './ComboBox.module.scss';
+
+interface ComboBoxProps {
+	selectedCategories: string[];
+	onChange: (categories: string[]) => void;
+	backgroundColor?: string;
+	color?: string;
+	fontSize?: string;
+	border?: string;
+}
 
 export default function ComboBox({
 	selectedCategories,

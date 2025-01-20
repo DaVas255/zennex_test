@@ -1,6 +1,18 @@
 import styles from './ProductsItem.module.scss';
-import { Product } from '@/types/types';
 import { RatingIcon } from '@/app/assets/icons';
+
+interface Product {
+	id: number;
+	title: string;
+	price: number;
+	description: string;
+	category: string;
+	image: string;
+	rating: {
+		rate: number;
+		count: number;
+	};
+}
 
 export default function ProductItem({ product }: { product: Product }) {
 	return (

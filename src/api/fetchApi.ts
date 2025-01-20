@@ -1,5 +1,19 @@
 import { API_URL } from "@/app/consts";
-import { Category, Product } from "@/types/types";
+
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+};
+
+type Category = Product['category'];
 
 export async function fetchProducts(): Promise<Product[] | null> {
   try {

@@ -1,8 +1,24 @@
 'use client';
 
-import { Product, ProductsListProps } from '@/types/types';
 import ProductItem from '@/components/ProductItem/ProductItem';
 import styles from './ProductsList.module.scss';
+
+type Product = {
+	id: number;
+	title: string;
+	price: number;
+	description: string;
+	category: string;
+	image: string;
+	rating: {
+		rate: number;
+		count: number;
+	};
+};
+
+type ProductsListProps = {
+	products: Product[];
+};
 
 export default function ProductsList({ products }: ProductsListProps) {
 	if (!products || !products.length) return <div>Нет товаров</div>;
