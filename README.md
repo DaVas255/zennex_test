@@ -34,15 +34,13 @@ npm run dev
 
 ## 3. Использование стилизации ComboBox
 
-Пример
+Есть параметр Theme, с помощью которого можно указать тему компонента
+light | dark | multi-color
 
 ```javascript
 <ComboBox
 	selectedCategories={selectedCategories}
 	onChange={setSelectedCategories}
-	backgroundColor='red'
-	color='red'
-	fontSize='20px'
-	border='1px solid red'
+	theme='light'
 />
 ```
