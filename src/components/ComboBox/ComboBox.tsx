@@ -1,9 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-
-import { fetchCategories } from '@/api/fetchApi';
+import { useRef, useState } from 'react';
 import { ChevronUpIcon, ChevronDownIcon, CloseIcon } from '@/app/assets/icons';
 import styles from './ComboBox.module.scss';
 import useClickOutside from '@/Hooks/useClickOutside';
